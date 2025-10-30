@@ -1,3 +1,5 @@
+# Adrienne Dominique Sy Chu
+
 from pgmpy.models import BayesianNetwork
 from pgmpy.inference import VariableElimination
 
@@ -58,3 +60,22 @@ alarm_infer = VariableElimination(alarm_model)
 
 q = alarm_infer.query(variables=["Alarm", "Burglary"],evidence={"MaryCalls":"yes"})
 print(q)
+
+def main():
+    print("\n--- Alarm Network Queries ---")
+
+    # Q1: Probability of Mary calling given that John called
+    q1 = alarm_infer.query(variables=["MaryCalls"], evidence={"JohnCalls": "yes"})
+    print("\nQ1. P(MaryCalls | JohnCalls=yes):\n", q1)
+
+    # Q2: Probability of both John and Mary calling given the alarm
+    q2 = alarm_infer.query(variables=["JohnCalls", "MaryCalls"], evidence={"Alarm": "yes"})
+    print("\nQ2. P(JohnCalls, MaryCalls | Alarm=yes):\n", q2)
+
+    # Q3: Probability of alarm given that Mary called
+    q3 = alarm_infer.query(variables=["Alarm"], evidence={"MaryCalls": "yes"})
+    print("\nQ3. P(Alarm | MaryCalls=yes):\n", q3)
+
+
+if __name__ == "__main__":
+    main()
