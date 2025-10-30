@@ -1,9 +1,9 @@
 # Adrienne Dominique Sy Chu
 
-from pgmpy.models import BayesianNetwork
+from pgmpy.models import DiscreteBayesianNetwork
 from pgmpy.inference import VariableElimination
 
-alarm_model = BayesianNetwork(
+alarm_model = DiscreteBayesianNetwork(
     [
         ("Burglary", "Alarm"),
         ("Earthquake", "Alarm"),
@@ -61,8 +61,9 @@ alarm_infer = VariableElimination(alarm_model)
 q = alarm_infer.query(variables=["Alarm", "Burglary"],evidence={"MaryCalls":"yes"})
 print(q)
 
+# Define and run all required queries
 def main():
-    print("\n--- Alarm Network Queries ---")
+    print("\nAlarm Network Queries")
 
     # Q1: Probability of Mary calling given that John called
     q1 = alarm_infer.query(variables=["MaryCalls"], evidence={"JohnCalls": "yes"})
